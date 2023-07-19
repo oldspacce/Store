@@ -1,0 +1,26 @@
+﻿@model Genre
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<h3>Вы действительно хотите удалить жанр?</h3>
+<div>
+    <h4>Жанр</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Жанр
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Genreid" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад</a>
+    </form>
+</div>

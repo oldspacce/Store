@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Order>
+@using System.Globalization 
+@{
+    ViewData["Title"] = "Заказы";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Номер заказа
+            </th>
+            <th>
+                Статус заказа
+            </th>
+            <th>
+                Место доставки
+            </th>
+            <th>
+                Дата доставки
+            </th>
+            <th>
+                Стоимость заказа
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model){
+            <tr>
+                <td>
+                    @Html.DisplayFor(moedlItem => item.Orderid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Point.Address)
+                </td>
+                <td>
+                    @item.Datedelivery.ToString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fullcost)
+                </td>
+                <td>
+                    <a class="text-dark" asp-action="DetailsOrder" asp-route-id="@item.Orderid">Подробности</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

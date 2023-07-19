@@ -1,0 +1,37 @@
+﻿@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+<div class="text-center">
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+            <form asp-controller="Home" asp-action="Login" asp-antiforgery="true">
+                <h2>Вход</h2>
+                <hr />
+                <div asp-class="validation" asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Login" class="control-label">Логин</label>
+                <input asp-for="Login" class="form-control" required />
+                    <span asp-validation-for="Login"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Пароль</label>
+                <input type="password" asp-for="Password" class="form-control" required />
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <h1></h1>
+                <div>
+                    <input type="submit" value="Вход" class="btn btn-primary" />
+                </div>
+            </form>
+    </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

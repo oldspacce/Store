@@ -1,0 +1,87 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>Пользователи</h1>
+
+<div id="modDialog" class="modal fade" role="dialog">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Фамилия
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+                Отчество
+            </th>
+            <th>
+                Логин
+            </th>
+            <th>
+                Пароль
+            </th>
+            <th>
+                Телефон
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patronymic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Userid">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Userid">Детали</a> |
+                <a asp-action="Delete" asp-route-id="@item.Userid">Удалить</a>|
+                <div>@Html.ActionLink("Изменить роль", "EditRole", new {id = item.Userid},
+                new { @class = "compItem"})</div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts
+    {
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+           $(".compItem").click(function (e) {
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                    $('#modDialog').on('click', 'button.close', function (e) {
+                    $('#modDialog').modal('hide');
+                });
+                });
+            });
+        })
+    </script>
+}

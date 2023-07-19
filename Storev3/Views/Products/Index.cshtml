@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Product>
+@using Storev3.SeedData
+
+@{
+    ViewData["Title"] = "Товары";
+}
+
+<h1>Товары</h1>
+
+<p>
+    <a asp-action="Create">Добавить новый товар</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Наименовние
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                Возраст
+            </th>
+            <th>
+                Зарезервировано
+            </th>
+            <th>
+                Оценка
+            </th>
+            <th>
+                Бренд
+            </th>
+            <th>
+                Жанр
+            </th>
+            <th>
+                Производитель
+            </th>
+            <th>
+                Количество  
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reservation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+            </td>
+            <td>
+                @SeedData.ProductCount(item.Productid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Productid">Изменить</a> |
+                <a asp-action="Delete" asp-route-id="@item.Productid">Удалить</a>|
+                <a asp-action="AddCount" asp-route-id="@item.Productid">Изменить количество</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

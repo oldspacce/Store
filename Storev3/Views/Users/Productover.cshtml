@@ -1,0 +1,23 @@
+﻿@model Dictionary<string, Guid>
+@using Storev3.SeedData
+@using Microsoft.AspNetCore.Identity
+@using Storev3.Controllers
+@using System
+
+
+@{
+    ViewData["Title"] = "a";
+}
+
+<div>
+    Недостаточно товара:
+</div>
+<div>
+    <dl class="row">
+        @foreach(var item in Model){
+            <dd class="col-sm-10">
+                @item.Key. Доступно:  @SeedData.ProductCountUser(item.Value, Guid.Parse(User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).Single())) шт.
+            </dd>
+        }
+    </dl>
+</div>

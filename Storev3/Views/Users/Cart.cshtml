@@ -1,0 +1,77 @@
+﻿@model CartModel
+@using Storev3.SeedData
+
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+
+
+<t1>Корзина</t1>
+
+@if(Model.ConfOrder != null){
+    <div id="modDialog" class="modal fade" role="dialog">
+        <div id="dialogContent" class="modal-dialog"></div>
+    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Productorder1){
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @SeedData.Multi(item.Count, item.Product.Cost)
+                </td>
+                <td>
+                    <form asp-action="DeletefromCart" asp-route-id="@item.Productid">
+                            <input type="submit" value="Удалить" class="btn" />
+                    </form>
+                </td>
+                <td>
+                     <div>@Html.ActionLink("Изменить Количество", "EditCount", new {id = item.Productorderid},
+                new { @class = "compItem"})</div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<h1></h1>
+    <a class="nav-link text-dark" asp-controller="Users" asp-action="MakingAnOrder" asp-route-id="@Model.ConfOrder.Orderid" asp-route-guid="@User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault()">Оформить заказ</a>
+}
+else {
+    <h1></h1>
+    <t1>Корзина пуста</t1>
+}
+
+@section scripts
+    {
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                    $('#modDialog').on('click', 'button.close', function (e) {
+                        $('#modDialog').modal('hide');
+                    });
+                });
+            });
+        })
+    </script>
+}

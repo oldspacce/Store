@@ -1,0 +1,65 @@
+﻿@model CartModel
+@using Storev3.SeedData;
+
+@{
+    ViewData["Title"] = "Оформление заказа";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Productorder1)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Count)
+                            </td>
+                            <td>
+                                @SeedData.Multi(item.Count, item.Product.Cost)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-auto">
+            <div>
+                Общая стоимость:
+                @Model.ConfOrder.Fullcost
+            </div>
+            <div class="form-group">
+        <label asp-for="@Model.ConfOrder.Pointid" class="control-label">Место доставки</label>
+        <select asp-for="@Model.ConfOrder.Pointid" class="form-control" asp-items="ViewBag.Pointofissue"></select>
+        <span asp-validation-for="@Model.ConfOrder.Pointid" class="text-danger"></span>
+            </div>
+            <h1></h1>
+            <div class="form-group">
+                <a class="nav-link text-dark" asp-controller="Users" asp-action="PaymentAnOrder" asp-route-id="@Model.ConfOrder.Orderid"> Оплатить заказ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

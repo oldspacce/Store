@@ -1,0 +1,22 @@
+﻿@model Genre
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Жанр</h1>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Жанр
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Genreid">Изменить</a> |
+    <a asp-action="Index">Назад</a>
+</div>

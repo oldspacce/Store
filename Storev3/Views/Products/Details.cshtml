@@ -1,0 +1,131 @@
+﻿@model ProductIndexData
+@using Microsoft.AspNetCore.Identity
+@using Storev3.Controllers
+@using Storev3.SeedData
+@using System;
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+@foreach (var item in Model.Products)
+{
+    <div id="modDialog" class="modal fade" role="dialog">
+        <div id="dialogContent" class="modal-dialog"></div>
+    </div>
+    <h1>@Html.DisplayFor(ModelItem => item.Name)</h1>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <img src="@item.Image" width="250" height="250" />
+            </div>
+            <div class="col-8">
+                   <dl class="row">
+        <dt class="col-sm-3">
+            Наименование
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(modelItem => item.Name)
+        </dd>
+        <dt class="col-sm-3">
+            Бренд
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(modelItem => item.Brand.Name)
+        </dd>
+        <dt class="col-sm-3">
+            Производитель
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+        </dd>
+        <dt class="col-sm-3">
+            Жанр
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(modelItem => item.Genre.Name)
+        </dd>
+        <dt class="col-sm-3">
+            Возраст
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(modelItem => item.Age)
+        </dd>
+        <dt class="col-sm-3">
+            Оценка
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(modelItem => item.Score)
+        </dd>
+        <dt class="col-sm-3">
+            Цена
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(modelItem => item.Cost)
+        </dd>
+    </dl>
+            </div>
+            </div>
+        </div>
+    if (@SeedData.ProductCount(item.Productid) > 0)
+    {
+        <div>
+            @if (User.Identity.IsAuthenticated && !User.IsInRole("admin"))
+            {
+                <a class="nav-link text-dark" asp-controller="Products" asp-action="AddCart" asp-route-id="@item.Productid">Добавить в корзину</a>
+                @if (!ProductsController.UserscoreExists(User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).Single(), item.Productid))
+                {
+                    <div>
+                        @Html.ActionLink("Поставить оценку", "EditScore", new {userid = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).Single(), productid = item.Productid, },
+        new { @class = "compItem"})
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        @Html.ActionLink("Изменить оценку", "EditScore", new {userid = User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).Single(), productid = item.Productid, },
+        new { @class = "compItem"})
+                    </div>
+                }
+                <div class="text-dark">В наличии: @SeedData.ProductCountUser(item.Productid, Guid.Parse(User.Claims.Where(c => c.Type == "Id").Select(c => c.Value).Single())) шт.</div>
+            }
+            else if (!User.IsInRole("admin"))
+            {                
+                <a class="nav-link text-dark" asp-controller="Users" asp-action="Create">Добавить в корзину</a>
+                <div class="text-dark">В наличии: @SeedData.ProductCountUser(item.Productid, Guid.Empty) шт.</div>
+            }
+            
+        </div>
+
+    }
+    else {
+        @if (!User.IsInRole("admin"))
+        {
+            <div class="text-black">Нет в наличии</div>
+        }
+    }
+
+}
+
+@section scripts
+    {
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                    $('#modDialog').on('click', 'button.close', function (e) {
+                        $('#modDialog').modal('hide');
+                    });
+                });
+            });
+        })
+    </script>
+}

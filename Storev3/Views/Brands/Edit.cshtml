@@ -1,0 +1,32 @@
+﻿@model Brand
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Изменить бренд</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Brandid" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Бренд</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <h1></h1>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад</a>
+</div>
+

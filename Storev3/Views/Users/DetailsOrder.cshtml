@@ -1,0 +1,41 @@
+﻿@model CartModel
+@using Storev3.SeedData
+
+
+@{
+    ViewData["Title"] = "Заказ";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Productorder1)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @SeedData.Multi(item.Count, item.Product.Cost)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="col align-self-end">
+    Общая стоимость:
+    @Model.ConfOrder.Fullcost
+</div>
+<div>
+    <a class="text-datk" asp-action="UserOrders" asp-route-id="@Model.ConfOrder.Userid">Вернуться к списку</a>
+</div>
+

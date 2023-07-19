@@ -1,0 +1,36 @@
+﻿@model Productstorage
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<hr />
+<div class="row text-center">
+    <div class="col-md-4 offset-md-4">
+        <form asp-action="AddCount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.Productstorageid"/>
+            <div class="form-group">
+                <label asp-for="Productid" class="control-label">Наименование</label>
+                <select asp-for="Productid" class ="form-control" asp-items="ViewBag.Productid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Storageid" class="control-label">Склад</label>
+                <select asp-for="Storageid" class ="form-control" asp-items="ViewBag.Storageid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Count" class="control-label">Количество</label>
+                <input asp-for="Count" class="form-control" />
+                <span asp-validation-for="Count" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Изменить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад</a>
+</div>
+

@@ -1,0 +1,68 @@
+﻿@model Product
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="row text-center">
+    <div class="col-md-4 offset-md-4">
+        <h4>Новый товар</h4>
+        <hr />
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Название</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Brandid" class="control-label">Бренд</label>
+                <select asp-for="Brandid" class ="form-control" asp-items="ViewBag.Brandid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Genreid" class="control-label">Жанр</label>
+                <select asp-for="Genreid" class ="form-control" asp-items="ViewBag.Genreid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manufacturerid" class="control-label">Производитель</label>
+                <select asp-for="Manufacturerid" class ="form-control" asp-items="ViewBag.Manufacturerid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label">Цена</label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label">Возраст</label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reservation" class="control-label">Зарезервированно</label>
+                <input asp-for="Reservation" class="form-control" />
+                <span asp-validation-for="Reservation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Score" class="control-label">Оценка</label>
+                <input asp-for="Score" class="form-control" />
+                <span asp-validation-for="Score" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label">Изображение</label>
+                <input type="file" name="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <h1></h1>
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад</a>
+</div>
+

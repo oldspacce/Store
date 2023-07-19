@@ -1,0 +1,101 @@
+﻿@model ProductIndexData
+
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Каталог</h1>
+</div>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Поиск <input type="text" name="SearchString" value="@ViewData["CurrentSearch"]" />
+            <input type="submit" value="Поиск" class="btn btn-default" /> 
+        </p>
+    </div>
+</form>
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            Фильтр
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th>
+                        Бренды
+                    </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model.Brands){
+                        <tr>
+                            <td>
+                                <a class="text-black" asp-action="Index" asp-route-Brandstring="@item.Name">@Html.DisplayFor(modelItem => item.Name)</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Жанры
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Genres)
+                    {
+                        <tr>
+                            <td>
+                                <a class="text-black" asp-action="Index" asp-route-Genrestring="@item.Name">@Html.DisplayFor(modelItem => item.Name)</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-SortOrder="@ViewData["NameSortParam"]">Название</a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-SortOrder="@ViewData["CostSortParam"]">Цена</a>
+                    </th>
+                    <th>
+                        Возраст
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-SortOrder="@ViewData["ScoreSortParam"]">Оценка</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            <a class="text-black" asp-controller="Products" asp-action="Details" asp-route-id="@item.Productid">@Html.DisplayFor(modelItem => item.Name)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Age)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Score)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
